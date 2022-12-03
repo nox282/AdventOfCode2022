@@ -1,0 +1,22 @@
+use crate::aoc_day;
+
+#[allow(dead_code, non_camel_case_types)]
+pub struct DataDay_DAYNUMBER_ {
+    input: String,
+}
+
+const TEST_INPUT: &str = "";
+
+impl aoc_day::aoc_day::AOCDay for DataDay_DAYNUMBER_ {
+    fn run_part_1(&self) -> &str {
+        // self.test_input;
+        // self.input;
+        todo!() // Code part 1 here
+    }
+
+    fn run_part_2(&self) -> &str {
+        // self.test_input;
+        // self.input;
+        todo!() // Code part 2 here
+    }
+}

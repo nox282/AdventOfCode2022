@@ -1,0 +1,23 @@
+{
+  "configurations": [
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "Debug unit tests in executable 'advent_of_code_2022'",
+      "cargo": {
+        "args": [
+          "test",
+          "--no-run",
+          "--bin=advent_of_code_2022",
+          "--package=advent_of_code_2022"
+        ],
+        "filter": {
+          "name": "advent_of_code_2022",
+          "kind": "bin"
+        }
+      },
+      "args": [],
+      "cwd": "${workspaceFolder}"
+    }
+  ]
+}
