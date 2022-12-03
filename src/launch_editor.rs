@@ -1,6 +1,8 @@
 use serde_derive::{Deserialize, Serialize};
 use std::{fmt, fs};
 
+use crate::config;
+
 #[derive(Deserialize, Serialize, Debug, Clone)]
 struct LaunchConfigurationCargoConfigFilter {
     name: String,
@@ -39,11 +41,9 @@ impl fmt::Display for LaunchEditorError {
     }
 }
 
-const LAUNCH_JSON_PATH: &str = ".vscode/launch.json";
-
 pub fn create_day_launch(day: i32) -> Result<bool, LaunchEditorError> {
     let launch_json_string =
-        fs::read_to_string(LAUNCH_JSON_PATH).expect("could not open launch.json");
+        fs::read_to_string(config::LAUNCH_JSON_PATH).expect("could not open launch.json");
 
     let configurations_result = serde_json::from_str::<LaunchConfigurations>(&launch_json_string);
     let configuration_container = match configurations_result {
@@ -104,7 +104,7 @@ pub fn create_day_launch(day: i32) -> Result<bool, LaunchEditorError> {
         }
     };
 
-    let write_result = fs::write(LAUNCH_JSON_PATH, new_launch_json_string);
+    let write_result = fs::write(config::LAUNCH_JSON_PATH, new_launch_json_string);
     match write_result {
         Ok(_) => return Ok(true),
         Err(error) => {

@@ -1,10 +1,11 @@
 mod aoc_args;
 mod aoc_day;
 mod aoc_input_downloader;
+mod config;
 mod launch_editor;
 
 use aoc_args::{ArgumentOptions, Arguments};
-use std::env;
+use std::{env, fs};
 
 #[tokio::main]
 async fn main() {
@@ -25,7 +26,32 @@ async fn process_arguments(arguments: Arguments) {
 }
 
 fn run_day(day: i32) {
-    println!("Running day {}", day);
+    println!("Running day {}...", day);
+    let input_path = format!(
+        "{}/{}{}",
+        config::INPUTS_PATH,
+        config::INPUT_FILE_PREFIX,
+        day.to_string()
+    );
+
+    let input = match fs::read_to_string(input_path) {
+        Ok(input) => input,
+        Err(e) => {
+            eprintln!("Cannot run day {}, {}", day.to_string(), e);
+            return;
+        }
+    };
+
+    match aoc_day::aoc_day_runner_factory::create_day_runner(day) {
+        Some(day_runner) => {
+            day_runner.run_part_1(&input);
+            day_runner.run_part_2(&input);
+        }
+        None => {
+            eprintln!("Could not create day runner.");
+            return;
+        }
+    };
 }
 
 async fn download_day(day: i32) {
@@ -59,7 +85,7 @@ async fn create_day(day: i32) {
 
     // create a source file for that specific day
     match aoc_day::aoc_day::create_aoc_day_source_file(day) {
-        Ok(_) => println!("Created day source"),
+        Ok(_) => println!("Created day's source files"),
         Err(e) => {
             eprint!("Could not create source file for day {}, {}", day, e);
             return;

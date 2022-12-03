@@ -1,3 +1,4 @@
+use crate::config;
 use std::{fmt, fs};
 
 #[derive(Debug, Clone)]
@@ -15,13 +16,10 @@ use reqwest::header::COOKIE;
 
 const BASE_URL: &str = "https://adventofcode.com";
 const YEAR: &str = "2022";
-const COOKIE_PATH: &str = "./secrets/aoc_cookie.txt";
-
-const INPUT_PATH: &str = "./src/inputs";
 
 pub async fn download_input(day: i32) -> Result<(), InputDownloadError> {
-    let cookie_value =
-        fs::read_to_string(COOKIE_PATH).expect(format!("Could not open {}", COOKIE_PATH).as_str());
+    let cookie_value = fs::read_to_string(config::COOKIE_PATH)
+        .expect(format!("Could not open {}", config::COOKIE_PATH).as_str());
 
     let request_url = format!("{}/{}/day/{}/input", BASE_URL, YEAR, day.to_string());
 
@@ -53,7 +51,12 @@ pub async fn download_input(day: i32) -> Result<(), InputDownloadError> {
         }
     };
 
-    let file_path = format!("{}/input_day_{}.txt", INPUT_PATH, day.to_string());
+    let file_path = format!(
+        "{}/{}{}",
+        config::INPUTS_PATH,
+        config::INPUT_FILE_PREFIX,
+        day.to_string()
+    );
     if let Err(error) = fs::write(file_path, input) {
         return Err(InputDownloadError {
             e: error.to_string(),
