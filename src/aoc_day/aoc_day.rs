@@ -9,8 +9,8 @@ const DAY_WILDCARD: &str = "_DAYNUMBER_";
 const DAY_FACTORY_MARKER: &str = "//_ADDADAY_";
 
 pub trait AOCDayRunner {
-    fn run_part_1(&self, input: &String) -> &str;
-    fn run_part_2(&self, input: &String) -> &str;
+    fn run_part_1(&self, input: &String, test_input: &String) -> String;
+    fn run_part_2(&self, input: &String, test_input: &String) -> String;
 }
 
 pub fn create_aoc_day_source_file(day: i32) -> Result<(), Error> {

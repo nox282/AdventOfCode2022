@@ -1,16 +1,15 @@
 use crate::aoc_day;
 
-#[allow(dead_code, non_camel_case_types)]
 pub struct DayRunner_DAYNUMBER_ {}
 
-const TEST_INPUT: &str = "";
-
 impl aoc_day::aoc_day::AOCDayRunner for DayRunner_DAYNUMBER_ {
-    fn run_part_1(&self, input: &String) -> &str {
-        todo!() // Code part 1 here
+    fn run_part_1(&self, input: &String, test_input: &String) -> String {
+        todo!(); // Code part 1 here
+        return "";
     }
 
-    fn run_part_2(&self, input: &String) -> &str {
-        todo!() // Code part 2 here
+    fn run_part_2(&self, input: &String, test_input: &String) -> String {
+        todo!(); // Code part 2 here
+        return "";
     }
 }

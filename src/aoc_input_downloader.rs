@@ -51,13 +51,22 @@ pub async fn download_input(day: i32) -> Result<(), InputDownloadError> {
         }
     };
 
-    let file_path = format!(
-        "{}/{}{}",
-        config::INPUTS_PATH,
-        config::INPUT_FILE_PREFIX,
-        day.to_string()
-    );
+    let dir_path = config::get_formatted_input_directory_path(day);
+    if let Err(error) = fs::create_dir_all(&dir_path) {
+        return Err(InputDownloadError {
+            e: error.to_string(),
+        });
+    }
+
+    let file_path = config::get_formatted_input_file_path(day);
     if let Err(error) = fs::write(file_path, input) {
+        return Err(InputDownloadError {
+            e: error.to_string(),
+        });
+    }
+
+    let test_file_path = config::get_formatted_test_input_file_path(day);
+    if let Err(error) = fs::File::create(test_file_path) {
         return Err(InputDownloadError {
             e: error.to_string(),
         });
