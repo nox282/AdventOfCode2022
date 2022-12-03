@@ -5,11 +5,11 @@ pub struct DayRunner_DAYNUMBER_ {}
 impl aoc_day::aoc_day::AOCDayRunner for DayRunner_DAYNUMBER_ {
     fn run_part_1(&self, input: &String, test_input: &String) -> String {
         todo!(); // Code part 1 here
-        return "";
+        return format!("{}", 1);
     }
 
     fn run_part_2(&self, input: &String, test_input: &String) -> String {
         todo!(); // Code part 2 here
-        return "";
+        return format!("{}", 1);
     }
 }
