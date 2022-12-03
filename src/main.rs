@@ -27,13 +27,8 @@ async fn process_arguments(arguments: Arguments) {
 
 fn run_day(day: i32) {
     println!("Running day {}...", day);
-    let input_path = format!(
-        "{}/{}{}",
-        config::INPUTS_PATH,
-        config::INPUT_FILE_PREFIX,
-        day.to_string()
-    );
 
+    let input_path = config::get_formatted_input_file_path(day);
     let input = match fs::read_to_string(input_path) {
         Ok(input) => input,
         Err(e) => {
@@ -42,10 +37,22 @@ fn run_day(day: i32) {
         }
     };
 
+    let test_input_path = config::get_formatted_test_input_file_path(day);
+    let test_input = match fs::read_to_string(test_input_path) {
+        Ok(test_input) => test_input,
+        Err(e) => {
+            eprintln!("Cannot runt day {}, {}", day.to_string(), e);
+            return;
+        }
+    };
+
     match aoc_day::aoc_day_runner_factory::create_day_runner(day) {
         Some(day_runner) => {
-            day_runner.run_part_1(&input);
-            day_runner.run_part_2(&input);
+            println!("------------------------------------------");
+            println!("part 1: {}:", day_runner.run_part_1(&input, &test_input));
+            println!("------------------------------------------");
+            println!("part 2: {}:", day_runner.run_part_2(&input, &test_input));
+            println!("------------------------------------------");
         }
         None => {
             eprintln!("Could not create day runner.");
