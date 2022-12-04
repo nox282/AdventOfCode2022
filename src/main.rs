@@ -49,9 +49,9 @@ fn run_day(day: i32) {
     match aoc_day::aoc_day_runner_factory::create_day_runner(day) {
         Some(day_runner) => {
             println!("------------------------------------------");
-            println!("part 1: {}:", day_runner.run_part_1(&input, &test_input));
+            println!("part 1: {}", day_runner.run_part_1(&input, &test_input));
             println!("------------------------------------------");
-            println!("part 2: {}:", day_runner.run_part_2(&input, &test_input));
+            println!("part 2: {}", day_runner.run_part_2(&input, &test_input));
             println!("------------------------------------------");
         }
         None => {
