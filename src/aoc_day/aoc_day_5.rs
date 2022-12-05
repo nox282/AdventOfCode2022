@@ -62,26 +62,23 @@ impl aoc_day::aoc_day::AOCDayRunner for DayRunner5 {
 fn parse_input_crates(input: &String) -> Vec<Vec<char>> {
     let mut crates: Vec<Vec<char>> = vec![];
 
-    // get queue count
+    // get stack count
     let lines: Vec<&str> = input.lines().collect();
     assert!(lines.len() > 0);
-    let queue_count = (lines[0].len() + 1) / 4;
+    let stack_count = (lines[0].len() + 1) / 4;
 
-    // initialize queues.
-    for _ in 0..queue_count {
+    // initialize stacks.
+    for _ in 0..stack_count {
         crates.push(vec![]);
     }
 
-    let mut end_of_crates_index = 0;
     input.lines().for_each(|line| {
         let has_crates = line.contains("[");
         if !has_crates {
             return;
         }
 
-        end_of_crates_index += 1;
-
-        for i in 0..queue_count {
+        for i in 0..stack_count {
             let crate_index = i * 4;
             let crate_id = line.chars().nth(crate_index + 1).unwrap_or(' ');
             if crate_id == ' ' {
@@ -164,12 +161,13 @@ fn format_result_string(crates: &Vec<Vec<char>>) -> String {
 }
 
 fn display_crates(crates: &Vec<Vec<char>>) {
-    let longest_queue = match crates.iter().map(|q| q.len()).max() {
-        Some(longest_queue) => longest_queue,
+    let tallest_stack = match crates.iter().map(|stack| stack.len()).max() {
+        Some(tallest_stack) => tallest_stack,
         None => return,
     };
 
-    for i in (1..longest_queue + 1).rev() {
+    // display crates
+    for i in (1..tallest_stack + 1).rev() {
         crates.iter().for_each(|stack| {
             if stack.len() >= i && stack.len() > 0 {
                 print!("[{}] ", stack[i - 1]);
@@ -181,6 +179,7 @@ fn display_crates(crates: &Vec<Vec<char>>) {
         print!("\n");
     }
 
+    // display stack number identifiers
     for i in 0..crates.len() {
         print!(" {}  ", i + 1);
     }
