@@ -1,4 +1,4 @@
-use std::cmp;
+use std::{cmp, fmt};
 
 use crate::aoc_day;
 
@@ -8,24 +8,33 @@ struct Instruction {
     to_stack_index: usize,
 }
 
+impl fmt::Display for Instruction {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(
+            f,
+            "move {} from {} to {}",
+            self.amount, self.from_stack_index, self.to_stack_index
+        )
+    }
+}
+
 pub struct DayRunner5 {}
 
 impl aoc_day::aoc_day::AOCDayRunner for DayRunner5 {
     fn run_part_1(&self, input: &String, _: &String) -> String {
-        let mut crates = parse_input_crates(input);
-        let instructions = parse_input_instructions(input);
+        let parsed_inputs = parse_inputs(&input);
+        let mut crates = parsed_inputs.0;
+        let instructions = parsed_inputs.1;
 
         display_crates_with_desc(&crates, "crates before instructions:");
 
-        instructions.lines().for_each(|line| {
-            let instructions = parse_instruction(line);
-
-            for _ in 0..instructions.amount {
-                let le_crate = crates[instructions.from_stack_index].pop().unwrap();
-                crates[instructions.to_stack_index].push(le_crate);
+        instructions.iter().for_each(|instruction| {
+            for _ in 0..instruction.amount {
+                let le_crate = crates[instruction.from_stack_index].pop().unwrap();
+                crates[instruction.to_stack_index].push(le_crate);
             }
 
-            display_crates_with_desc(&crates, format!("{}: ", line).as_str());
+            display_crates_with_desc(&crates, format!("{}: ", instruction).as_str());
         });
 
         display_crates_with_desc(&crates, "result:");
@@ -33,30 +42,42 @@ impl aoc_day::aoc_day::AOCDayRunner for DayRunner5 {
     }
 
     fn run_part_2(&self, input: &String, _: &String) -> String {
-        let mut crates = parse_input_crates(input);
-        let instructions = parse_input_instructions(input);
+        let parsed_inputs = parse_inputs(&input);
+        let mut crates = parsed_inputs.0;
+        let instructions = parsed_inputs.1;
 
         display_crates_with_desc(&crates, "crates before instructions:");
 
-        instructions.lines().for_each(|line| {
-            let instructions = parse_instruction(line);
-
+        instructions.iter().for_each(|instruction| {
             let mut les_crates: Vec<char> = vec![];
-            for _ in 0..instructions.amount {
-                les_crates.push(crates[instructions.from_stack_index].pop().unwrap());
+            for _ in 0..instruction.amount {
+                les_crates.push(crates[instruction.from_stack_index].pop().unwrap());
             }
 
             les_crates.reverse();
             for le_crate in les_crates {
-                crates[instructions.to_stack_index].push(le_crate);
+                crates[instruction.to_stack_index].push(le_crate);
             }
 
-            display_crates_with_desc(&crates, format!("{}: ", line).as_str());
+            display_crates_with_desc(&crates, format!("{}: ", instruction).as_str());
         });
 
         display_crates_with_desc(&crates, "result:");
         return format!("{}", format_result_string(&crates));
     }
+}
+
+fn parse_inputs(input: &String) -> (Vec<Vec<char>>, Vec<Instruction>) {
+    let splits: Vec<&str> = input.split("\r\n\r\n").collect();
+    assert_eq!(splits.len(), 2);
+
+    return (
+        parse_input_crates(&splits[0].to_string()),
+        splits[1]
+            .lines()
+            .map(|line| parse_instruction(line))
+            .collect(),
+    );
 }
 
 fn parse_input_crates(input: &String) -> Vec<Vec<char>> {
@@ -91,21 +112,6 @@ fn parse_input_crates(input: &String) -> Vec<Vec<char>> {
 
     crates.iter_mut().for_each(|stack| stack.reverse());
     return crates;
-}
-
-fn parse_input_instructions(input: &String) -> String {
-    let mut end_of_crates_index = 0;
-    input.lines().for_each(|line| {
-        let has_crates = line.contains("[");
-        if !has_crates {
-            return;
-        }
-
-        end_of_crates_index += 1;
-    });
-    let lines: Vec<&str> = input.lines().collect();
-    let result = &lines.split_at(end_of_crates_index + 2).1.join("\n");
-    return result.to_string();
 }
 
 fn parse_instruction(line: &str) -> Instruction {
