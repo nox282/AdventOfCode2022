@@ -1,5 +1,4 @@
-use core::time;
-use std::{collections::HashSet, thread};
+use std::collections::HashSet;
 
 use vector2d::Vector2D;
 
@@ -37,8 +36,6 @@ impl aoc_day::aoc_day::AOCDayRunner for DayRunner9 {
 
             for _ in 0..amount {
                 simulate(&mut rope, direction);
-
-                display_rope(&rope, 256, 256);
 
                 let last = rope.last().unwrap();
                 t_record.insert((last.x, last.y));
@@ -104,32 +101,4 @@ fn normalize(v: &mut Vector2D<i32>) {
     if v.y.abs() > 1 {
         v.y = v.y / v.y.abs();
     }
-}
-
-fn display_rope(rope: &Vec<Vector2D<i32>>, width: i32, height: i32) {
-    // clears the terminal
-    print!("\x1B[2J\x1B[1;1H");
-
-    for x in (0..width).rev() {
-        for y in (0..height).rev() {
-            let mut did_draw = false;
-            for i in 0..rope.len() {
-                if rope[i].x == x && rope[i].y == y {
-                    if i == 0 {
-                        print!("H");
-                    } else {
-                        print!("{}", i)
-                    }
-                    did_draw = false;
-                    break;
-                }
-            }
-
-            if !did_draw {
-                print!(".");
-            }
-        }
-        print!("\n");
-    }
-    thread::sleep(time::Duration::from_millis(16));
 }
