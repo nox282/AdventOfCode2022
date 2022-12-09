@@ -3,16 +3,8 @@ use crate::aoc_day;
 pub struct DayRunner8 {}
 
 impl aoc_day::aoc_day::AOCDayRunner for DayRunner8 {
-    fn run_part_1(&self, input: &String, test_input: &String) -> String {
-        let mut grid: Vec<Vec<u8>> = input
-            .lines()
-            .map(|line| {
-                return line
-                    .chars()
-                    .map(|c| c.to_string().parse::<u8>().expect("Incorrect inputs"))
-                    .collect();
-            })
-            .collect();
+    fn run_part_1(&self, input: &String, _: &String) -> String {
+        let grid = parse_input(input);
         let height = grid.len();
         let width = grid[0].len();
 
@@ -38,19 +30,8 @@ impl aoc_day::aoc_day::AOCDayRunner for DayRunner8 {
         return format!("{}", visible_count);
     }
 
-    fn run_part_2(&self, input: &String, test_input: &String) -> String {
-        let mut grid: Vec<Vec<u8>> = input
-            .lines()
-            .map(|line| {
-                return line
-                    .chars()
-                    .map(|c| c.to_string().parse::<u8>().expect("Incorrect inputs"))
-                    .collect();
-            })
-            .collect();
-
-        grid.iter();
-
+    fn run_part_2(&self, input: &String, _: &String) -> String {
+        let grid = parse_input(input);
         let height = grid.len();
         let width = grid[0].len();
 
@@ -63,6 +44,18 @@ impl aoc_day::aoc_day::AOCDayRunner for DayRunner8 {
 
         return format!("{}", scenic_score.iter().max().unwrap());
     }
+}
+
+fn parse_input(input: &str) -> Vec<Vec<u8>> {
+    return input
+        .lines()
+        .map(|line| {
+            return line
+                .chars()
+                .map(|c| c.to_string().parse::<u8>().expect("Incorrect inputs"))
+                .collect();
+        })
+        .collect();
 }
 
 fn is_visible(pos: &(usize, usize), grid: &Vec<Vec<u8>>, height: usize, width: usize) -> bool {
@@ -165,7 +158,5 @@ fn get_scenic_score(pos: &(usize, usize), grid: &Vec<Vec<u8>>, height: usize, wi
     }
 
     result *= counter;
-    counter = 0;
-
     return result;
 }

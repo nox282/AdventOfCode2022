@@ -3,7 +3,6 @@ mod aoc_day;
 mod aoc_input_downloader;
 mod config;
 mod launch_editor;
-mod lib;
 
 use aoc_args::{ArgumentOptions, Arguments};
 use std::{env, fs};
