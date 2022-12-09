@@ -11,3 +11,4 @@ serde_derive = "1.0.148"
 serde = "1.0.148"
 reqwest = "0.11.13"
 tokio = { version = "1.22.0", features = ["full"] }
+vector2d = "2.2.0"
