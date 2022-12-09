@@ -17,6 +17,7 @@ pub fn create_day_runner(day: i32) -> Option<Box<dyn aoc_day::aoc_day::AOCDayRun
     return match day {
         // _ADDADAY_
         9 => Some(Box::new(aoc_day::aoc_day_9::DayRunner9 {})),
+        8 => Some(Box::new(aoc_day::aoc_day_8::DayRunner8 {})),
         7 => Some(Box::new(aoc_day::aoc_day_7::DayRunner7 {})),
         6 => Some(Box::new(aoc_day::aoc_day_6::DayRunner6 {})),
         5 => Some(Box::new(aoc_day::aoc_day_5::DayRunner5 {})),
