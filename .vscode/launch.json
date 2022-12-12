@@ -249,6 +249,27 @@
         "11"
       ],
       "cwd": "${workspaceFolder}"
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "Debug Day 12",
+      "cargo": {
+        "args": [
+          "build",
+          "--bin=advent_of_code_2022",
+          "--package=advent_of_code_2022"
+        ],
+        "filter": {
+          "name": "advent_of_code_2022",
+          "kind": "bin"
+        }
+      },
+      "args": [
+        "-day",
+        "12"
+      ],
+      "cwd": "${workspaceFolder}"
     }
   ]
 }
