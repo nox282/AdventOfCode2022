@@ -5,7 +5,7 @@ use crate::aoc_day;
 pub struct DayRunner13 {}
 
 impl aoc_day::aoc_day::AOCDayRunner for DayRunner13 {
-    fn run_part_1(&self, input: &String, test_input: &String) -> String {
+    fn run_part_1(&self, input: &String, _: &String) -> String {
         let lines: Vec<&str> = input.lines().collect();
         let res = lines.chunks(3).enumerate().fold(0, |acc, e| {
             let index = e.0 + 1;
@@ -24,7 +24,7 @@ impl aoc_day::aoc_day::AOCDayRunner for DayRunner13 {
         return format!("{}", res);
     }
 
-    fn run_part_2(&self, input: &String, test_input: &String) -> String {
+    fn run_part_2(&self, input: &String, _: &String) -> String {
         let lines: Vec<&str> = input.lines().collect();
         let mut packets: Vec<&str> = lines
             .chunks(3)
