@@ -1,6 +1,7 @@
 use vector2d::Vector2D;
 
 use crate::aoc_day;
+
 use std::{cmp, collections::HashMap};
 
 type Point = (i32, i32);
@@ -39,17 +40,22 @@ impl aoc_day::aoc_day::AOCDayRunner for DayRunner14 {
                 break;
             }
 
-            // uncomment for cool visualization
-            // display(&world, (world.bounds.0, 0), (world.bounds.2, 72), 0);
-            // let sixteen_millis = time::Duration::from_millis(16);
-            // thread::sleep(sixteen_millis);
+            // // uncomment for cool visualization
+            // {
+            //     use core::time;
+            //     use std::thread;
+
+            //     display(&world, (475, 0), (525, 75), 0);
+            //     let sixteen_millis = time::Duration::from_millis(16);
+            //     thread::sleep(sixteen_millis);
+            // }
         }
 
         let ans = world.entities.iter().filter(|kvp| kvp.1 == &SAND).count();
         return format!("{}", ans);
     }
 
-    fn run_part_2(&self, input: &String, _: &String) -> String {
+    fn run_part_2(&self, input: &String, test_input: &String) -> String {
         let mut world = parse_input(input, true);
 
         world.bounds.3 += 2;
@@ -71,6 +77,16 @@ impl aoc_day::aoc_day::AOCDayRunner for DayRunner14 {
             if world.entities[&sand_point] == SAND {
                 sand_point = sand_source;
             }
+
+            // // uncomment for cool visualization
+            // {
+            //     use core::time;
+            //     use std::thread;
+
+            //     display(&world, (475, 0), (525, 75), 0);
+            //     let sixteen_millis = time::Duration::from_millis(16);
+            //     thread::sleep(sixteen_millis);
+            // }
         }
 
         let ans = world.entities.iter().filter(|kvp| kvp.1 == &SAND).count();
