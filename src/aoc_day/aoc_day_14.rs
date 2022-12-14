@@ -58,9 +58,6 @@ impl aoc_day::aoc_day::AOCDayRunner for DayRunner14 {
         let mut sand_point = sand_source;
 
         loop {
-            if false {
-                break;
-            }
             match world.entities.get(&sand_source) {
                 Some(c) => {
                     if c == &SAND {
@@ -69,6 +66,7 @@ impl aoc_day::aoc_day::AOCDayRunner for DayRunner14 {
                 }
                 None => {}
             }
+
             sand_point = tick(&mut world, &sand_point);
             if world.entities[&sand_point] == SAND {
                 sand_point = sand_source;
