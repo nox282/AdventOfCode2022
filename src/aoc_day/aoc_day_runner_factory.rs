@@ -16,6 +16,7 @@ pub fn create_day_runner(day: i32) -> Option<Box<dyn aoc_day::aoc_day::AOCDayRun
     #[allow(unreachable_code)]
     return match day {
         // _ADDADAY_
+        15 => Some(Box::new(aoc_day::aoc_day_15::DayRunner15 {})),
         14 => Some(Box::new(aoc_day::aoc_day_14::DayRunner14 {})),
         13 => Some(Box::new(aoc_day::aoc_day_13::DayRunner13 {})),
         12 => Some(Box::new(aoc_day::aoc_day_12::DayRunner12 {})),
