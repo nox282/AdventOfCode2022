@@ -55,7 +55,7 @@ impl aoc_day::aoc_day::AOCDayRunner for DayRunner14 {
         return format!("{}", ans);
     }
 
-    fn run_part_2(&self, input: &String, test_input: &String) -> String {
+    fn run_part_2(&self, input: &String, _: &String) -> String {
         let mut world = parse_input(input, true);
 
         world.bounds.3 += 2;

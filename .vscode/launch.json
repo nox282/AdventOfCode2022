@@ -333,6 +333,27 @@
         "15"
       ],
       "cwd": "${workspaceFolder}"
+    },
+    {
+      "type": "lldb",
+      "request": "launch",
+      "name": "Debug Day 16",
+      "cargo": {
+        "args": [
+          "build",
+          "--bin=advent_of_code_2022",
+          "--package=advent_of_code_2022"
+        ],
+        "filter": {
+          "name": "advent_of_code_2022",
+          "kind": "bin"
+        }
+      },
+      "args": [
+        "-day",
+        "16"
+      ],
+      "cwd": "${workspaceFolder}"
     }
   ]
 }
